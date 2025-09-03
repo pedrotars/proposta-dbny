@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automação Financeira - Tars & Co</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #ffffff;
+        }
+
+        /* Header Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            height: 40px;
+            width: auto;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-item a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-item a:hover {
+            color: #63d297;
+        }
+
+        .nav-item a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #63d297;
+            border-radius: 1px;
+        }
+
+        /* Sections */
+        .section {
+            min-height: 100vh;
+            padding: 120px 2rem 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #f8fffe 0%, #f0fdf9 100%);
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            color: #6b7280;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            line-height: 1.4;
+        }
+
+        .hero .company-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .tars-logo {
+            height: 60px;
+            opacity: 0.8;
+        }
+
+        /* Section Headers */
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+
+        .section-header .section-subtitle {
+            font-size: 1.2rem;
+            color: #6b7280;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Objetivo Section */
+        .objetivo {
+            background: #ffffff;
+        }
+
+        .objetivo-content {
+            text-align: center;
+        }
+
+        .objetivo-text {
+            font-size: 1.4rem;
+            color: #374151;
+            line-height: 1.8;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Solucao Section */
+        .solucao {
+            background: linear-gradient(135deg, #f0fdf9 0%, #f8fffe 100%);
+        }
+
+        .processo-flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .processo-step {
+            flex: 1;
+            background: #63d297;
+            color: white;
+            padding: 2.5rem 2rem;
+            border-radius: 15px;
+            text-align: center;
+            position: relative;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .processo-step h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .processo-step::after {
+            content: '→';
+            position: absolute;
+            right: -30px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            color: #63d297;
+            font-weight: bold;
+        }
+
+        .processo-step:last-child::after {
+            display: none;
+        }
+
+        .relatorios-list {
+            margin-top: 1rem;
+            text-align: left;
+        }
+
+        .relatorios-list ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .relatorios-list li {
+            margin: 0.5rem 0;
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        .relatorios-list li::before {
+            content: '●';
+            position: absolute;
+            left: 0;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Atencao Section */
+        .atencao {
+            background: #ffffff;
+        }
+
+        .atencao-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .atencao-item {
+            padding: 2rem;
+            background: #f9fafb;
+            border-radius: 15px;
+            border-left: 5px solid #63d297;
+        }
+
+        .atencao-item h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+
+        .atencao-item p {
+            color: #4b5563;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight {
+            background: #fef3c7;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        /* Cronograma Section */
+        .cronograma {
+            background: linear-gradient(135deg, #f0fdf9 0%, #f8fffe 100%);
+        }
+
+        .cronograma-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .cronograma-etapa {
+            flex: 1;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .etapa-header {
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .etapa-duracao {
+            background: #63d297;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .etapa-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .etapa-categoria {
+            font-size: 0.9rem;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .etapa-content {
+            padding: 0 2rem 2rem;
+        }
+
+        .etapa-content h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+
+        .etapa-content ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .etapa-content li {
+            margin: 0.8rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: #4b5563;
+            line-height: 1.5;
+        }
+
+        .etapa-content li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #63d297;
+            font-weight: bold;
+        }
+
+        /* Comercial Section */
+        .comercial {
+            background: #ffffff;
+        }
+
+        .comercial-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-top: 3rem;
+            align-items: start;
+        }
+
+        .implementacao-box {
+            background: linear-gradient(135deg, #63d297 0%, #4ade80 100%);
+            color: white;
+            padding: 3rem;
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        .implementacao-box h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .preco-implementacao {
+            font-size: 3rem;
+            font-weight: 700;
+            margin: 1rem 0;
+        }
+
+        .suporte-section h3 {
+            font-size: 1.5rem;
+            color: #1f2937;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .pricing-table {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .pricing-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .pricing-table th {
+            background: #63d297;
+            color: white;
+            padding: 1.5rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .pricing-table td {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .pricing-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .pricing-table tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .preco-valor {
+            font-weight: 600;
+            color: #63d297;
+            font-size: 1.1rem;
+        }
+
+        /* Contato Section */
+        .contato {
+            background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .contato h2 {
+            color: white;
+            margin-bottom: 3rem;
+        }
+
+        .contato-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .contato-nome {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+        }
+
+        .contato-item {
+            font-size: 1.2rem;
+            color: #d1d5db;
+            margin: 0.5rem 0;
+        }
+
+        .contato-item a {
+            color: #63d297;
+            text-decoration: none;
+        }
+
+        .contato-item a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .processo-flow {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .processo-step::after {
+                content: '↓';
+                right: 50%;
+                bottom: -25px;
+                top: auto;
+                transform: translateX(50%);
+            }
+
+            .cronograma-container {
+                flex-direction: column;
+            }
+
+            .comercial-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .section-header h2 {
+                font-size: 2rem;
+            }
+
+            .nav-menu {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .section {
+                padding: 100px 1rem 40px;
+            }
+
+            .hero .company-info {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo-container">
+                <img src="/Users/pedrobzawislak/Desktop/logo-tars.png" alt="Tars & Co" class="logo">
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="#hero" class="nav-link">Início</a></li>
+                <li class="nav-item"><a href="#objetivo" class="nav-link">Objetivo</a></li>
+                <li class="nav-item"><a href="#solucao" class="nav-link">Solução</a></li>
+                <li class="nav-item"><a href="#atencao" class="nav-link">Atenção</a></li>
+                <li class="nav-item"><a href="#cronograma" class="nav-link">Cronograma</a></li>
+                <li class="nav-item"><a href="#comercial" class="nav-link">Comercial</a></li>
+                <li class="nav-item"><a href="#contato" class="nav-link">Contato</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="section hero">
+        <div class="container">
+            <h1>Automação Financeira</h1>
+            <p class="subtitle">Proposta de trabalho para implementação de automação de coleta e organização de informações financeiras a partir de extratos bancários</p>
+            <div class="company-info">
+                <img src="/Users/pedrobzawislak/Desktop/logo-tars.png" alt="Tars & Co" class="tars-logo">
+            </div>
+        </div>
+    </section>
+
+    <!-- Objetivo Section -->
+    <section id="objetivo" class="section objetivo">
+        <div class="container">
+            <div class="section-header">
+                <h2>Objetivo do Projeto</h2>
+            </div>
+            <div class="objetivo-content">
+                <p class="objetivo-text">
+                    O projeto visa automatizar a captura e classificação de entradas e saídas financeiras de extratos bancários, organizando-as por categorias e CNPJ e apresentando-as em tabelas e gráficos.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solução Section -->
+    <section id="solucao" class="section solucao">
+        <div class="container">
+            <div class="section-header">
+                <h2>Solução</h2>
+            </div>
+            <div class="processo-flow">
+                <div class="processo-step">
+                    <h3>Criar/revisar categorias das movimentações financeiras</h3>
+                </div>
+                <div class="processo-step">
+                    <h3>Inserir .csv do extrato bancário e indicar CNPJ na plataforma</h3>
+                </div>
+                <div class="processo-step">
+                    <h3>Adicionar informações em banco de dados</h3>
+                </div>
+                <div class="processo-step">
+                    <h3>Gerar relatórios gerenciais</h3>
+                    <div class="relatorios-list">
+                        <ul>
+                            <li>Receita/despesa</li>
+                            <li>Visualização por categoria, CNPJ e outros dados coletados</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Principais pontos de atenção Section -->
+    <section id="atencao" class="section atencao">
+        <div class="container">
+            <div class="section-header">
+                <h2>Principais Pontos de Atenção</h2>
+            </div>
+            <div class="atencao-grid">
+                <div class="atencao-item">
+                    <h3>Precisão da IA</h3>
+                    <p>Assim como pessoas, a IA pode apresentar inconsistências. Para mitigar, utilizamos mecanismos de verificação (ex.: análise paralela com duas IAs).</p>
+                    <p>→ Em média, a <span class="highlight">assertividade inicial é de ~70%</span>. Nosso trabalho é aumentar esse índice continuamente ao longo dos meses.</p>
+                </div>
+                <div class="atencao-item">
+                    <h3>Evolução de Modelos</h3>
+                    <p>Mudanças em modelos de LLM podem afetar a performance da solução.</p>
+                </div>
+                <div class="atencao-item">
+                    <h3>Formatos de Arquivos</h3>
+                    <p>Alterações nos layouts de extrato exigirão ajustes na automação para manter a consistência.</p>
+                </div>
+                <div class="atencao-item">
+                    <h3>Escopo Atual</h3>
+                    <p>Uso de extratos bancários em formato .csv.</p>
+                </div>
+                <div class="atencao-item">
+                    <h3>Armazenamento</h3>
+                    <p>Dados gerados ficam disponíveis por até 2 anos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cronograma Section -->
+    <section id="cronograma" class="section cronograma">
+        <div class="container">
+            <div class="section-header">
+                <h2>Cronograma</h2>
+            </div>
+            <div class="cronograma-container">
+                <div class="cronograma-etapa">
+                    <div class="etapa-header">
+                        <div class="etapa-duracao">2 semanas</div>
+                        <h3 class="etapa-title">Etapa 1. Visualização</h3>
+                        <div class="etapa-categoria">Implementação</div>
+                    </div>
+                    <div class="etapa-content">
+                        <h4>Atividades</h4>
+                        <ul>
+                            <li>Mapear um extrato representativo de cada CNPJ (premissa: 1 tipo por CNPJ)</li>
+                            <li>Definir categorias das movimentações com base no último extrato</li>
+                            <li>Definir gráficos, tabelas e dashboards a serem gerados</li>
+                            <li>Mapear requisitos para cada visualização</li>
+                            <li>Definir estrutura da base de dados para alimentar visualizações</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="cronograma-etapa">
+                    <div class="etapa-header">
+                        <div class="etapa-duracao">3 semanas</div>
+                        <h3 class="etapa-title">Etapa 2. Implementação</h3>
+                        <div class="etapa-categoria">Implementação</div>
+                    </div>
+                    <div class="etapa-content">
+                        <h4>Atividades</h4>
+                        <ul>
+                            <li>Definir como CNPJ será mapeado e vinculado às respectivas movimentações</li>
+                            <li>Construir versão inicial da automação ponta a ponta</li>
+                            <li>Implementar guardrails (opcional - pode gerar necessidades de revisão desnecessárias)</li>
+                            <li>Implementar teste amostral de outras LLMs</li>
+                            <li>Realizar checkpoints de validação da automação</li>
+                            <li>Construir versão final da automação</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="cronograma-etapa">
+                    <div class="etapa-header">
+                        <div class="etapa-duracao">contínuo</div>
+                        <h3 class="etapa-title">Etapa 3. Acompanhamento</h3>
+                        <div class="etapa-categoria">Suporte Contínuo</div>
+                    </div>
+                    <div class="etapa-content">
+                        <h4>Atividades</h4>
+                        <ul>
+                            <li>Custos de sustentação (LLM, plataforma integradora, banco de dados)*</li>
+                            <li>Acompanhamento de performance de modelos de LLM</li>
+                            <li>Correção de bugs</li>
+                        </ul>
+                        <p style="font-size: 0.9rem; color: #6b7280; margin-top: 1rem;">
+                            *mudanças no stack tecnológico (por exemplo modelos de LLM mais caros) podem gerar necessidade de revisão de preço do suporte
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Condições Comerciais Section -->
+    <section id="comercial" class="section comercial">
+        <div class="container">
+            <div class="section-header">
+                <h2>Condições Comerciais</h2>
+            </div>
+            <div class="comercial-grid">
+                <div class="implementacao-box">
+                    <h3>Valor da Implementação</h3>
+                    <div class="preco-implementacao">R$ 14.000</div>
+                </div>
+                
+                <div class="suporte-section">
+                    <h3>Valor do suporte contínuo (1 ano de compromisso)</h3>
+                    <div class="pricing-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Volume</th>
+                                    <th>Custo mensal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Até 1.000 movimentações mensais</td>
+                                    <td class="preco-valor">R$ 199</td>
+                                </tr>
+                                <tr>
+                                    <td>Entre 1.000 e 5.000 movimentações mensais</td>
+                                    <td class="preco-valor">R$ 699</td>
+                                </tr>
+                                <tr>
+                                    <td>Entre 5.000 e 10.000 movimentações mensais</td>
+                                    <td class="preco-valor">R$ 1.199</td>
+                                </tr>
+                                <tr>
+                                    <td>Entre 10.000 e 20.000 movimentações mensais</td>
+                                    <td class="preco-valor">R$ 2.199</td>
+                                </tr>
+                                <tr>
+                                    <td>Acima de 20.000 movimentações mensais</td>
+                                    <td class="preco-valor">R$ 89 a cada 1000 movimentações incrementais</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contato Section -->
+    <section id="contato" class="section contato">
+        <div class="container">
+            <h2>Obrigado</h2>
+            <div class="contato-info">
+                <div class="contato-nome">Pedro Zawislak</div>
+                <div class="contato-item">
+                    <a href="mailto:pedro@tarscompany.com">pedro@tarscompany.com</a>
+                </div>
+                <div class="contato-item">
+                    <a href="tel:+5511994587857">(11) 99458-7857</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Navigation active state
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('.section');
+
+            function updateActiveNav() {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if (window.pageYOffset >= sectionTop - 200) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === '#' + current) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', updateActiveNav);
+            updateActiveNav();
+        });
+    </script>
+</body>
+</html>
